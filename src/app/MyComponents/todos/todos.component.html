@@ -1,0 +1,64 @@
+<div class="p-6 bg-gray-100 rounded-lg shadow-md">
+  <h2 class="text-xl font-bold mb-4 text-center">Todo List</h2>
+
+  <!-- Add New Todo -->
+  <div class="flex items-center mb-4">
+    <input
+      type="text"
+      [(ngModel)]="newTodo"
+      placeholder="Add a new todo"
+      class="flex-1 p-2 border border-gray-300 rounded-l focus:outline-none focus:ring focus:ring-blue-300"
+    />
+    <button
+      (click)="addTodo()"
+      class="px-4 py-2 bg-blue-500 text-white font-semibold rounded-r hover:bg-blue-600"
+    >
+      Add
+    </button>
+  </div>
+
+  <!-- Search Todos -->
+  <div class="mb-4">
+    <input
+      type="text"
+      [(ngModel)]="searchQuery"
+      placeholder="Search todos..."
+      class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-300"
+    />
+  </div>
+
+  <!-- Todo List -->
+  <ul class="space-y-2">
+    <li
+      *ngFor="let todo of filteredTodos"
+      class="flex items-center justify-between p-3 border border-gray-300 rounded hover:shadow"
+    >
+      <div class="flex items-center">
+        <input
+          type="checkbox"
+          [(ngModel)]="todo.completed"
+          (change)="toggleCompletion(todo)"
+          class="mr-3"
+        />
+        <span
+          [class.line-through]="todo.completed"
+          [class.text-gray-500]="todo.completed"
+          class="text-base"
+        >
+          {{ todo.title | titlecase }}
+        </span>
+      </div>
+      <button
+        (click)="deleteTodo(todo.id)"
+        class="px-2 py-1 text-xs font-semibold text-white bg-red-500 rounded hover:bg-red-600"
+      >
+        Delete
+      </button>
+    </li>
+  </ul>
+
+  <!-- No Todos Found -->
+  <p *ngIf="filteredTodos.length === 0" class="text-center text-gray-500 mt-4">
+    No todos found.
+  </p>
+</div>
